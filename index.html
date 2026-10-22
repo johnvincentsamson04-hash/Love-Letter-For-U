@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8e8e8">
+  <meta name="description" content="A little love-letter scrapbook, made with love just for you.">
+  <title>For My Love ♡</title>
+  <style>
+    :root {
+      --rose: #b85e76;
+      --deep-rose: #78394e;
+      --pink: #f5d8dc;
+      --blush: #fff0ef;
+      --cream: #fffaf0;
+      --paper: #fffdf7;
+      --ink: #51323b;
+      --muted: #896b72;
+      --shadow: 0 14px 34px rgba(105, 57, 70, .12);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 12% 12%, rgba(255,255,255,.75), transparent 28rem),
+        radial-gradient(ellipse at 90% 50%, rgba(244,205,213,.4), transparent 25rem),
+        var(--cream);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    button, audio { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 3px solid #a64766; outline-offset: 4px; }
+    .handwritten { font-family: "Segoe Print", "Bradley Hand", "Comic Sans MS", cursive; }
+    .hero {
+      min-height: 72vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 5rem 1.25rem 4rem;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(59,43,66,.28), rgba(92,51,70,.25)),
+        linear-gradient(135deg, #b6a5bd 0%, #e7a9a8 47%, #f3c8b2 100%);
+      color: white;
+      isolation: isolate;
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(1px);
+      opacity: .25;
+    }
+    .hero::before { width: 25rem; height: 25rem; background: #fff4e8; top: -15rem; left: -5rem; }
+    .hero::after { width: 30rem; height: 30rem; background: #9e6b89; bottom: -23rem; right: -6rem; }
+    .hero-note { font-size: .95rem; letter-spacing: .04em; opacity: .92; }
+    .hero h1 { font-size: clamp(3.2rem, 11vw, 6.8rem); line-height: 1.05; margin: .35rem 0 1rem; font-weight: 500; text-shadow: 0 4px 24px #6d455c55; }
+    .hero p { font-size: clamp(1rem, 3vw, 1.35rem); max-width: 34rem; margin: 0 auto 1.6rem; }
+    .tiny-heart { display: inline-block; color: #ffe2e4; animation: heartbeat 1.7s ease-in-out infinite; }
+    .pill {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      border: 1px solid rgba(255,255,255,.8); border-radius: 999px;
+      padding: .75rem 1.2rem; color: white; background: rgba(255,255,255,.13);
+      text-decoration: none; cursor: pointer; transition: transform .2s, background .2s;
+      backdrop-filter: blur(6px);
+    }
+    .pill:hover { transform: translateY(-2px); background: rgba(255,255,255,.25); }
+    .section { width: min(1100px, 100%); margin: 0 auto; padding: 4rem 1.2rem; }
+    .section-title { text-align: center; margin: 0 0 .4rem; font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 500; color: var(--deep-rose); }
+    .section-subtitle { text-align: center; color: var(--muted); margin: 0 auto 2.3rem; max-width: 38rem; }
+    .letter-area {
+      display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+      gap: clamp(1.5rem, 5vw, 4rem); align-items: center;
+    }
+    .envelope-wrap { display: grid; place-items: center; padding: 1.4rem .5rem; }
+    .envelope {
+      width: min(100%, 330px); aspect-ratio: 1.45 / 1; position: relative;
+      border: 0; cursor: pointer; background: #e9a9b5; border-radius: 8px;
+      box-shadow: var(--shadow); transition: transform .25s; padding: 0;
+      perspective: 900px;
+    }
+    .envelope:hover { transform: translateY(-5px) rotate(-1deg); }
+    .envelope::before {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(145deg, #f6c7cd, #d98c9e);
+      clip-path: polygon(0 0, 100% 0, 50% 64%);
+      border-radius: 8px 8px 0 0; z-index: 3;
+      transform-origin: top; transition: transform .8s ease;
+    }
+    .envelope::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(35deg, #d9879a, #f3bbc5 52%, #e6a0b0);
+      clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
+      border-radius: 8px; z-index: 2;
+    }
+    .envelope .letter-peek {
+      position: absolute; left: 8%; right: 8%; bottom: 8%; height: 78%;
+      display: grid; place-items: start center; padding-top: 1.2rem;
+      background: var(--paper); border-radius: 4px; z-index: 1;
+      transition: transform .8s ease;
+      color: var(--deep-rose); font-size: 1.1rem;
+    }
+    .envelope .seal {
+      position: absolute; z-index: 4; left: 50%; top: 58%; transform: translate(-50%,-50%);
+      width: 3.2rem; height: 3.2rem; border-radius: 50%; background: var(--rose); color: white;
+      display: grid; place-items: center; font-size: 1.65rem; box-shadow: 0 3px 8px #8e435644;
+      transition: opacity .3s, transform .3s;
+    }
+    .envelope.open::before { transform: rotateX(180deg); z-index: 0; }
+    .envelope.open .letter-peek { transform: translateY(-34%); z-index: 4; }
+    .envelope.open .seal { opacity: 0; transform: translate(-50%,-50%) scale(.3); }
+    .tap-hint { color: var(--muted); text-align: center; margin: 1rem 0 0; font-size: .95rem; }
+    .letter-paper {
+      background:
+        linear-gradient(90deg, transparent 2.4rem, rgba(203,131,145,.12) 2.45rem, transparent 2.5rem),
+        repeating-linear-gradient(transparent 0 2rem, rgba(203,131,145,.12) 2.03rem 2.07rem),
+        var(--paper);
+      padding: clamp(1.5rem, 4vw, 3rem);
+      border: 1px solid #f0d9d7; box-shadow: var(--shadow);
+      border-radius: 4px 12px 5px 10px; position: relative; transform: rotate(.4deg);
+    }
+    .letter-paper::before { content: "♡"; position: absolute; right: 1rem; top: .3rem; color: #d58a9a; font-size: 1.6rem; }
+    .letter-paper h3 { margin: 0 0 1rem; font-size: 1.8rem; color: var(--deep-rose); font-weight: 500; }
+    .letter-paper p { margin: 0 0 1rem; }
+    .signature { text-align: right; color: var(--deep-rose); margin-top: 1.5rem !important; }
+    .reveal-note { display: none; margin-top: 1rem; text-align: center; color: var(--rose); }
+    .reveal-note.show { display: block; animation: fadeUp .8s both; }
+    .memory-section { background: rgba(255,239,236,.72); width: 100%; border-top: 1px solid #f6dddd; border-bottom: 1px solid #f6dddd; }
+    .memory-inner { width: min(1100px, 100%); margin: auto; padding: 4rem 1.2rem; }
+    .gallery { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.2rem; }
+    .polaroid {
+      background: white; padding: .65rem .65rem .9rem; box-shadow: 0 7px 18px #7d4c561c;
+      transform: rotate(var(--tilt, -2deg)); transition: transform .25s, box-shadow .25s;
+      align-self: start; position: relative;
+    }
+    .polaroid:nth-child(3n) { --tilt: 2deg; }
+    .polaroid:nth-child(3n + 1) { --tilt: -2.5deg; }
+    .polaroid:nth-child(3n + 2) { --tilt: 1.5deg; }
+    .polaroid:hover { transform: translateY(-7px) rotate(0deg) scale(1.035); box-shadow: 0 15px 28px #7d4c562b; z-index: 2; }
+    .photo-frame {
+      aspect-ratio: 4 / 4.7; background: linear-gradient(145deg, #f8dfe0, #ead5dc 55%, #f7e9d5);
+      overflow: hidden; display: grid; place-items: center; position: relative; color: #9c6b79;
+    }
+    .photo-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .photo-frame .placeholder { text-align: center; padding: .5rem; font-size: .85rem; }
+    .photo-frame .placeholder span { display: block; font-size: 2rem; margin-bottom: .25rem; }
+    .caption { text-align: center; padding-top: .7rem; font-size: .95rem; line-height: 1.35; color: #67434e; }
+    .tape { width: 52px; height: 17px; background: #e8c6ad99; position: absolute; top: -7px; left: calc(50% - 26px); transform: rotate(-4deg); }
+    .song-card {
+      display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center;
+      background: linear-gradient(130deg, #f5d6d9, #fff0e8); border: 1px solid #f0d0d3;
+      border-radius: 22px; padding: clamp(1.4rem, 4vw, 2.5rem); box-shadow: var(--shadow);
+    }
+    .record {
+      width: clamp(100px, 20vw, 165px); aspect-ratio: 1; border-radius: 50%;
+      background: repeating-radial-gradient(circle, #4e3444 0 3px, #392938 4px 6px);
+      display: grid; place-items: center; animation: spin 12s linear infinite; animation-play-state: paused;
+      box-shadow: 0 6px 16px #6c415044;
+    }
+    .record.playing { animation-play-state: running; }
+    .record-center { width: 38%; aspect-ratio: 1; background: #eaa9b7; border-radius: 50%; display: grid; place-items: center; color: #873e58; font-size: 1.6rem; border: 5px solid #f5c7cf; }
+    .song-info h3 { margin: 0; color: var(--deep-rose); font-size: clamp(1.4rem, 4vw, 2rem); font-weight: 500; }
+    .song-info p { margin: .2rem 0 1rem; color: var(--muted); }
+    .player-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; }
+    .play-btn {
+      border: 0; border-radius: 999px; background: var(--rose); color: white; padding: .75rem 1.1rem;
+      cursor: pointer; box-shadow: 0 4px 10px #9d536344; transition: transform .2s;
+    }
+    .play-btn:hover { transform: scale(1.04); }
+    .song-status { font-size: .9rem; color: var(--muted); }
+    audio { width: 100%; margin-top: 1rem; }
+    .song-help { margin: 1rem 0 0; font-size: .9rem; color: var(--muted); }
+    .ending { text-align: center; padding: 5rem 1.2rem; background: linear-gradient(180deg, #fff0ed, #f3d5dc); }
+    .ending h2 { font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; margin: 0 0 1rem; color: var(--deep-rose); font-weight: 500; }
+    .ending p { max-width: 35rem; margin: .5rem auto; }
+    .footer { text-align: center; padding: 1.2rem; background: #553945; color: #fff1f1; font-size: .9rem; }
+    .floating-heart { position: fixed; z-index: 20; bottom: -2rem; pointer-events: none; color: #c66b83; animation: floatUp 5s ease-in forwards; text-shadow: 0 2px 8px #b55a7533; }
+    .sparkle { position: fixed; z-index: 20; pointer-events: none; animation: sparkle .75s ease-out forwards; color: #d78b9d; }
+    @keyframes heartbeat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes floatUp { to { transform: translateY(-110vh) rotate(25deg); opacity: 0; } }
+    @keyframes sparkle { from { transform: scale(.4) rotate(0); opacity: 1; } to { transform: scale(1.7) rotate(45deg); opacity: 0; } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @media (max-width: 850px) { .gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 650px) {
+      .hero { min-height: 62vh; padding-top: 4rem; }
+      .section, .memory-inner { padding: 3rem 1rem; }
+      .letter-area { grid-template-columns: 1fr; gap: 1rem; }
+      .envelope { width: min(84%, 330px); }
+      .letter-paper { transform: none; }
+      .gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem .8rem; }
+      .song-card { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+      .song-info { width: 100%; }
+      .player-controls { justify-content: center; }
+      .song-status { flex-basis: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero" id="top">
+    <div>
+      <div class="hero-note handwritten">just a little website to remind you...</div>
+      <h1 class="handwritten">My Love <span class="tiny-heart">♡</span></h1>
+      <p>A small piece of my heart, made just for you.</p>
+      <a class="pill" href="#letter">Open your little surprise <span aria-hidden="true">♡</span></a>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="letter">
+      <h2 class="section-title handwritten">A Letter for You</h2>
+      <p class="section-subtitle">A few words from my heart to yours. Tap the envelope first. 💌</p>
+      <div class="letter-area">
+        <div class="envelope-wrap">
+          <button class="envelope" id="envelope" type="button" aria-label="Open the love letter" aria-expanded="false">
+            <span class="letter-peek handwritten">For My Love ♡</span>
+            <span class="seal" aria-hidden="true">♥</span>
+          </button>
+          <p class="tap-hint handwritten" id="envelopeHint">Tap the envelope to open it ♡</p>
+        </div>
+        <article class="letter-paper" id="letterPaper">
+          <h3 class="handwritten">My Love,</h3>
+          <p>Thank you for being my safest place. No matter what happens, I will always be grateful that I get to love you.</p>
+          <p>You make my ordinary days special, and I hope this little website reminds you how much you mean to me.</p>
+          <p>I hope that whenever life gets busy or things feel difficult, you remember that you are loved, appreciated, and so important to me. I may not always find the perfect words, but I will keep choosing to show you how much you matter.</p>
+          <p class="signature handwritten">Always yours,<br>your person ♡</p>
+          <p class="reveal-note handwritten" id="revealNote">P.S. You're my favorite notification. ♡</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="memory-section" id="memories">
+      <div class="memory-inner">
+        <h2 class="section-title handwritten">Our Memories</h2>
+        <p class="section-subtitle">Ten little spaces for the moments I want to keep close. Replace each sample with one of your favorite pictures.</p>
+        <div class="gallery">
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>♡</span>Add photo 1<br><small>photo1.jpg</small></div><img src="photo1.jpg" alt="Our first memory" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">You &amp; me ♡</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>✿</span>Add photo 2<br><small>photo2.jpg</small></div><img src="photo2.jpg" alt="A happy moment together" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">Always better together</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>♡</span>Add photo 3<br><small>photo3.jpg</small></div><img src="photo3.jpg" alt="One of my favorite pictures of us" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">My favorite person</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>☼</span>Add photo 4<br><small>photo4.jpg</small></div><img src="photo4.jpg" alt="A day we want to remember" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">More adventures with you</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>♡</span>Add photo 5<br><small>photo5.jpg</small></div><img src="photo5.jpg" alt="A sweet memory" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">Same view, different day</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>☾</span>Add photo 6<br><small>photo6.jpg</small></div><img src="photo6.jpg" alt="A cozy memory together" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">You make everything better</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>✧</span>Add photo 7<br><small>photo7.jpg</small></div><img src="photo7.jpg" alt="A fun day together" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">My happy place ♡</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>✿</span>Add photo 8<br><small>photo8.jpg</small></div><img src="photo8.jpg" alt="A little thing that made us happy" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">Little things, big happiness</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>♡</span>Add photo 9<br><small>photo9.jpg</small></div><img src="photo9.jpg" alt="A memory we treasure" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">Growing with you</figcaption></figure>
+          <figure class="polaroid"><span class="tape"></span><div class="photo-frame"><div class="placeholder"><span>∞</span>Add photo 10<br><small>photo10.jpg</small></div><img src="photo10.jpg" alt="One more favorite memory" loading="lazy" onerror="this.style.display='none'"></div><figcaption class="caption handwritten">Forever, always ♡</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="song">
+      <h2 class="section-title handwritten">Our Song ♡</h2>
+      <p class="section-subtitle">A song that makes me think of you.</p>
+      <div class="song-card">
+        <div class="record" id="record" aria-hidden="true"><div class="record-center">♥</div></div>
+        <div class="song-info">
+          <h3>The Only Exception</h3>
+          <p>Paramore · our little soundtrack</p>
+          <div class="player-controls">
+            <button class="play-btn" id="playButton" type="button">▶ Play our song</button>
+            <span class="song-status" id="songStatus" role="status">Add your audio file below to enable playback.</span>
+          </div>
+          <!-- Put a music file you are allowed to use in this same folder and name it song.mp3. -->
+          <audio id="songPlayer" controls preload="none">
+            <source src="song.mp3" type="audio/mpeg">
+            Your browser does not support audio playback.
+          </audio>
+          <p class="song-help">Music not playing yet? Add your own permitted audio file named <strong>song.mp3</strong> to the same GitHub folder as this page. This page does not include or download the copyrighted song.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="ending">
+      <div class="handwritten" style="font-size:1.1rem; margin-bottom:1rem;">one last thing...</div>
+      <h2 class="handwritten">I Love You</h2>
+      <p class="handwritten" style="font-size:1.25rem;">Today. Tomorrow. Always.</p>
+      <p>Thank you for being you, My Love. Here's to all the memories we've made and all the beautiful little moments still waiting for us. ♡</p>
+      <button class="pill" id="heartButton" type="button" style="margin-top:1rem;background:#b85e76;border-color:#b85e76;">Send you a little love ♡</button>
+    </section>
+  </main>
+
+  <footer class="footer">Made with love ♡ Just for you, My Love.</footer>
+
+  <script>
+    const envelope = document.getElementById('envelope');
+    const hint = document.getElementById('envelopeHint');
+    const revealNote = document.getElementById('revealNote');
+    envelope.addEventListener('click', () => {
+      const isOpen = envelope.classList.toggle('open');
+      envelope.setAttribute('aria-expanded', String(isOpen));
+      hint.textContent = isOpen ? 'Your letter is open ♡' : 'Tap the envelope to open it ♡';
+      revealNote.classList.toggle('show', isOpen);
+      if (isOpen) burstHearts(9);
+    });
+
+    const player = document.getElementById('songPlayer');
+    const playButton = document.getElementById('playButton');
+    const songStatus = document.getElementById('songStatus');
+    const record = document.getElementById('record');
+
+    playButton.addEventListener('click', async () => {
+      if (player.paused) {
+        try {
+          await player.play();
+          playButton.textContent = '❚❚ Pause our song';
+          songStatus.textContent = 'Playing just for you ♡';
+          record.classList.add('playing');
+        } catch (error) {
+          songStatus.textContent = 'Add song.mp3 to the website folder first, then try again.';
+        }
+      } else {
+        player.pause();
+      }
+    });
+    player.addEventListener('play', () => {
+      playButton.textContent = '❚❚ Pause our song';
+      songStatus.textContent = 'Playing just for you ♡';
+      record.classList.add('playing');
+    });
+    player.addEventListener('pause', () => {
+      playButton.textContent = '▶ Play our song';
+      record.classList.remove('playing');
+      if (player.currentTime > 0 && !player.ended) songStatus.textContent = 'Paused — press play when you’re ready.';
+    });
+    player.addEventListener('ended', () => {
+      songStatus.textContent = 'A little song, for my favorite person ♡';
+      playButton.textContent = '▶ Play again';
+    });
+    player.addEventListener('error', () => {
+      songStatus.textContent = 'No song.mp3 found yet — add your audio file to enable playback.';
+    });
+
+    function makeHeart(x, y) {
+      const heart = document.createElement('span');
+      heart.className = 'floating-heart';
+      heart.textContent = ['♡', '♥', '✧', '✿'][Math.floor(Math.random() * 4)];
+      heart.style.left = x + 'px';
+      heart.style.fontSize = (16 + Math.random() * 22) + 'px';
+      heart.style.animationDuration = (3.5 + Math.random() * 2.5) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6500);
+    }
+    function burstHearts(count = 12) {
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => makeHeart(window.innerWidth * (.2 + Math.random() * .6), window.innerHeight), i * 100);
+      }
+    }
+    document.getElementById('heartButton').addEventListener('click', () => {
+      burstHearts(24);
+      const button = document.getElementById('heartButton');
+      button.textContent = 'A whole sky full of love for you ♡';
+      setTimeout(() => button.textContent = 'Send you a little love ♡', 2600);
+    });
+    document.addEventListener('click', (event) => {
+      if (event.target.closest('button, a')) return;
+      const sparkle = document.createElement('span');
+      sparkle.className = 'sparkle';
+      sparkle.textContent = '✧';
+      sparkle.style.left = event.clientX + 'px';
+      sparkle.style.top = event.clientY + 'px';
+      sparkle.style.fontSize = (14 + Math.random() * 12) + 'px';
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 800);
+    });
+  </script>
+</body>
+</html>
