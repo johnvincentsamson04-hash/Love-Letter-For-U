@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Little Scrapbook ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+:root{--pink:#dc7d9b;--light-pink:#f7dce3;--paper:#fff8ed;--ink:#49363c;--rose:#b95678}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:'Nunito',sans-serif;background:#e8b3c1;min-height:100vh}
+button{font:inherit;cursor:pointer}
+.page{display:none;min-height:100vh;padding:22px 16px 40px;background:radial-gradient(ellipse at 10% 10%,#ffffff88,transparent 45%),repeating-linear-gradient(0deg,#fff8ed 0px,#fff8ed 28px,#f3e4d9 29px,#fff8ed 30px);position:relative;overflow:hidden;animation:appear .5s ease}
+.page.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.topbar{display:flex;justify-content:space-between;align-items:center;max-width:900px;margin:0 auto 25px;font-size:13px}
+.topbar button{background:none;border:none;color:var(--ink)}
+.page-count{font-weight:800}
+h1,h2,h3,.hand{font-family:'Caveat',cursive}
+h1{font-size:clamp(43px,10vw,68px);line-height:1;margin:12px 0}
+h2{font-size:clamp(36px,8vw,48px);text-align:center;margin:10px 0 4px}
+.subtitle{text-align:center;margin:0 0 26px;font-size:14px}
+.cover{background:radial-gradient(ellipse at 20% 20%,#fce9ec,transparent 50%),linear-gradient(145deg,#f4c6d0,#e9aab9)}
+.cover-content{max-width:850px;margin:55px auto 20px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:28px}
+.paper{background:var(--paper);padding:26px 22px;box-shadow:0 8px 18px #86536325;transform:rotate(-2deg);position:relative}
+.paper:before{content:"♡";color:var(--pink);position:absolute;right:12px;top:5px;font-size:22px}
+.cover-photo{background:white;padding:10px 10px 36px;box-shadow:0 8px 20px #70405130;transform:rotate(3deg)}
+.cover-photo img{width:100%;height:300px;object-fit:cover}
+.caption{font-family:'Caveat',cursive;text-align:center;font-size:24px;padding-top:5px}
+.sticker{position:absolute;font-size:38px;color:var(--rose);opacity:.8}
+.s1{top:90px;left:7%}.s2{bottom:70px;right:7%}
+.btn{border:none;background:var(--pink);color:white;padding:13px 23px;border-radius:30px;font-weight:800;box-shadow:0 4px 0 #b75e7a;transition:.2s}
+.btn:active{transform:translateY(3px);box-shadow:none}
+.center{text-align:center;margin-top:25px}
+.gallery{max-width:850px;margin:0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.polaroid{padding:8px 8px 12px;background:white;box-shadow:0 4px 10px #6f45501c;transform:rotate(-1deg);transition:transform .25s}
+.polaroid:nth-child(even){transform:rotate(2deg)}.polaroid:hover{transform:rotate(0) scale(1.03)}
+.polaroid img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#f0dce0}
+.polaroid p{font-family:'Caveat',cursive;font-size:20px;text-align:center;margin:6px 0 0}
+.letter{max-width:620px;margin:25px auto;padding:30px 25px;background:#fffaf0;box-shadow:0 8px 20px #65404a22;transform:rotate(-1deg);font-family:'Caveat',cursive;font-size:25px;line-height:1.55;white-space:pre-line}
+.music-card{max-width:560px;margin:30px auto;padding:22px;background:#f8dce3;border-radius:22px;box-shadow:0 7px 20px #8d4b6020}
+.music-top{display:flex;align-items:center;gap:17px}
+.music-top img{width:95px;height:95px;object-fit:cover;border-radius:12px}
+audio{width:100%;margin-top:20px}
+.timeline{max-width:600px;margin:25px auto;position:relative;padding-left:32px;border-left:3px solid #d77e9b}
+.memory{position:relative;background:#fffaf0;padding:16px;margin:0 0 20px;box-shadow:0 4px 10px #70405115}
+.memory:before{content:"♥";position:absolute;left:-44px;top:15px;color:var(--rose);font-size:21px}
+.memory h3{font-size:26px;margin:0 0 4px}.memory p{margin:0;line-height:1.6}
+.final-paper{max-width:600px;margin:50px auto 25px;padding:40px 25px;background:#fff8ec;text-align:center;transform:rotate(-1deg);box-shadow:0 10px 25px #35213e30}
+.final-paper p{font-family:'Caveat',cursive;font-size:28px;line-height:1.5}
+.heart{position:fixed;bottom:-30px;pointer-events:none;animation:floatUp 4s linear forwards;z-index:20}
+@keyframes floatUp{to{transform:translateY(-110vh) rotate(30deg);opacity:0}}
+.footer{text-align:center;font-family:'Caveat',cursive;font-size:21px;margin:35px 0 0}
+
+.mixtape{position:relative;max-width:540px;margin:36px auto 24px;padding:26px 22px 22px;background:#f8e4d7;border:1px solid #e8c6b6;box-shadow:5px 7px 0 #e6c4c0,0 12px 24px #70405120;transform:rotate(-1deg)}
+.tape{position:absolute;width:76px;height:21px;background:#e8b2b8c9;top:-9px;z-index:2}
+.tape-left{left:22px;transform:rotate(-9deg)}.tape-right{right:22px;transform:rotate(8deg);background:#d9c6a8d9}
+.mixtape-photo{position:relative;background:#fff;padding:9px 9px 28px;max-width:285px;margin:0 auto 20px;transform:rotate(2deg);box-shadow:0 4px 10px #62434a20}
+.mixtape-photo img{width:100%;height:235px;object-fit:cover;display:block;background:#f3d5dd}
+.photo-doodle{position:absolute;right:15px;bottom:1px;font-family:'Caveat',cursive;color:#cf6d8e;font-size:27px}
+.song-note{padding:17px 16px 13px;background:#fff8ed;transform:rotate(-1deg);text-align:center;border:1px dashed #dfb8b0}
+.song-label{font-size:10px;letter-spacing:2px;color:#ad637b;font-weight:800}
+.song-note h3{font-size:39px;margin:5px 0}
+.song-subtitle{font-size:13px;margin:0}
+.song-doodle{font-family:'Caveat',cursive;font-size:27px;color:#cf7893;margin-top:8px}
+.mixtape audio{display:block;width:100%;margin:20px 0 12px;accent-color:#c66d8c}
+.song-message{font-family:'Caveat',cursive;font-size:23px;line-height:1.3;text-align:center;margin:14px 5px}
+.handwritten-sign{text-align:right;font-family:'Caveat',cursive;font-size:23px;color:#a95676;margin-top:10px}
+
+@media(max-width:600px){.cover-content{grid-template-columns:1fr;max-width:390px;margin-top:35px;gap:22px}.cover-photo img{height:260px}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.polaroid p{font-size:18px}.letter{font-size:23px;padding:24px 18px}.page{padding-left:13px;padding-right:13px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition:none!important}}
+</style>
+</head>
+<body>
+<section class="page cover active" id="page1">
+<div class="sticker s1">♡</div><div class="sticker s2">♡</div>
+<div class="topbar"><span class="hand" style="font-size:23px">Our Little Scrapbook ♡</span><span>For my baby ♡</span></div>
+<div class="cover-content">
+<div class="paper"><p class="hand" style="font-size:22px">A little</p><h1>A piece of my heart, for you ♡</h1><p>You, me, and all our little moments — forever.</p><p class="hand" style="font-size:30px">♡</p></div>
+<div class="cover-photo"><img src="photo1.jpeg" alt="Our first scrapbook photo"><div class="caption">Thank you for being you ♡</div></div>
+</div>
+<div class="center"><button class="btn" onclick="showPage(2)">Open My Scrapbook ♡ →</button></div>
+</section>
+<section class="page" id="page2">
+<div class="topbar"><button onclick="showPage(1)">← Home</button><span class="page-count">2 / 6 ♡</span></div>
+<h2>Our Photo Gallery</h2><p class="subtitle">10 little moments, 1 big love.</p>
+<div class="gallery" id="gallery"></div>
+<div class="center"><button class="btn" onclick="showPage(3)">Next: My Letter ♡ →</button></div>
+</section>
+<section class="page" id="page3">
+<div class="topbar"><button onclick="showPage(2)">← Photos</button><span class="page-count">3 / 6 ♡</span></div>
+<h2>My Love Letter</h2><p class="subtitle">Just for you, my baby.</p>
+<div class="letter">My baby, ♡
+
+I don't even know where to start. You're one of the best things that ever happened in my life. You make my ordinary days feel special, and you give me reasons to smile even when things get hard.
+
+Even though we're far apart, you're always close to my heart. I wish I could hug you whenever you feel tired, hold your hand when you're sad, and be beside you in every little moment.
+
+I want to support your dreams, celebrate your achievements, and remind you that you don't have to face everything alone. I'll keep learning how to love you better, one day at a time.
+
+Thank you for being my pahinga, my happiness, and my favorite person.
+
+I love you today, tomorrow, and in all the days waiting for us. ♡
+
+Always your baby,
+Your love ♡</div>
+<div class="center"><button class="btn" onclick="showPage(4)">Our Song ♡ →</button></div>
+</section>
+<section class="page" id="page4">
+<div class="topbar"><button onclick="showPage(3)">← Love Letter</button><span class="page-count">4 / 6 ♡</span></div>
+<h2>Our Little Mixtape</h2>
+<p class="subtitle">A song, a memory, and a little piece of my heart. ♡</p>
+
+<div class="mixtape">
+  <div class="tape tape-left"></div>
+  <div class="tape tape-right"></div>
+  <div class="mixtape-photo">
+    <img src="photo2.jpeg" alt="A favorite memory of us">
+    <span class="photo-doodle">♡</span>
+  </div>
+  <div class="song-note">
+    <div class="song-label">SIDE A · JUST FOR YOU</div>
+    <h3>Our Song ♡</h3>
+    <p class="song-subtitle">For my favorite person in the whole world.</p>
+    <div class="song-doodle">♪ ♡ ♪</div>
+  </div>
+  <audio id="scrapbookSong" controls preload="metadata">
+    <source src="My%20song.mp3" type="audio/mpeg">
+    Your browser does not support audio.
+  </audio>
+  <p class="song-message">“Whenever this song plays, I hope you feel a little closer to me.”</p>
+  <div class="handwritten-sign">love, your baby ♡</div>
+</div>
+
+<p class="subtitle">P.S. You can press play whenever you miss me. ♡</p>
+<div class="center"><button class="btn" onclick="showPage(5)">Our Memories ♡ →</button></div>
+</section>
+<section class="page" id="page5">
+<div class="topbar"><button onclick="showPage(4)">← Our Song</button><span class="page-count">5 / 6 ♡</span></div>
+<h2>Our Memories</h2><p class="subtitle">Our little story, one moment at a time.</p>
+<div class="timeline">
+<div class="memory"><h3>The Beginning ♡</h3><p>The start of something that became so important to me. I'm grateful our paths crossed.</p></div>
+<div class="memory"><h3>Our Little Moments ♡</h3><p>Every conversation, every laugh, and every small thing about us became a memory I treasure.</p></div>
+<div class="memory"><h3>Through the Hard Days ♡</h3><p>We're still learning, growing, and understanding each other. I want to keep choosing us.</p></div>
+<div class="memory"><h3>Our Future ♡</h3><p>There are still so many places to see, hugs to share, and memories waiting to happen.</p></div>
+</div>
+<div class="center"><button class="btn" onclick="showPage(6)">One Last Thing ♡ →</button></div>
+</section>
+<section class="page cover" id="page6">
+<div class="topbar"><button onclick="showPage(5)">← Our Memories</button><span class="page-count">6 / 6 ♡</span></div>
+<div class="final-paper"><div style="font-size:50px">💗</div><h2>For My Baby</h2>
+<p>Out of all the people in this world, I'm so happy I get to love you.</p>
+<p>I'm not perfect, but my love for you is something I want to take care of every day.</p>
+<p>Distance may keep us apart for now, but you still have a special place in my heart.</p>
+<p>I love you so much, baby. Thank you for being part of my story. ♡</p>
+<h2>Always and always. ∞</h2></div>
+<div class="center"><button class="btn" onclick="showPage(1)">Back to Our Scrapbook ♡</button></div>
+<p class="footer">Made with all my love, just for you. ♡</p>
+</section>
+<script>
+const captions=["You & Me ♡","Our favorite moments ♡","My happiness ♡","Always together ♡","Little things ♡","My favorite person ♡","More memories ♡","My safe place ♡","You make me smile ♡","Us, always ♡"];
+const gallery=document.getElementById("gallery");
+for(let i=1;i<=10;i++){
+ const card=document.createElement("div");card.className="polaroid";
+ const img=document.createElement("img");img.src=`photo${i}.jpeg`;img.alt=captions[i-1];img.loading="lazy";
+ img.onerror=function(){this.alt="Photo "+i+" not found";this.style.background="#f7dce3";};
+ const cap=document.createElement("p");cap.textContent=captions[i-1];
+ card.appendChild(img);card.appendChild(cap);gallery.appendChild(card);
+}
+function showPage(n){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById("page"+n).classList.add("active");
+ window.scrollTo({top:0,behavior:"smooth"});
+ const audio=document.querySelectorAll("audio");
+ audio.forEach(a=>{if(n!==4)a.pause();});
+ if(n===6)makeHearts();
+}
+function makeHearts(){
+ for(let i=0;i<18;i++){
+  const h=document.createElement("span");h.className="heart";
+  h.textContent=["♡","♥","💕","💗"][i%4];
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(18+Math.random()*20)+"px";
+  h.style.animationDelay=Math.random()*2+"s";
+  document.body.appendChild(h);setTimeout(()=>h.remove(),6500);
+ }
+}
+</script>
+</body>
+</html>
